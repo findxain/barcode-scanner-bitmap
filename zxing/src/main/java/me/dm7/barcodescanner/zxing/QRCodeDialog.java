@@ -1,62 +1,35 @@
-package com.innexiv.hhu.tools;
+package me.dm7.barcodescanner.zxing;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.ImageFormat;
-import android.graphics.Rect;
-import android.graphics.YuvImage;
-import android.hardware.Camera;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.zxing.Result;
-import com.innexiv.hhu.R;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import me.dm7.barcodescanner.zxing.ZXingScannerView;
-
-//import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 
 public class QRCodeDialog extends Dialog implements ZXingScannerView.ResultHandler {
 
 
-    @BindView(R.id.textViewText)
     TextView textViewText;
-    @BindView(R.id.buttonOK)
     Button buttonOK;
-    @BindView(R.id.buttonRescan)
     Button buttonRescan;
-    //    @BindView(R.id.frameLayout)
-//    FrameLayout frameLayout;
-    private QrCodeScanResult qrCodeScanResult;
-    @BindView(R.id.textViewTitle)
-    TextView textViewTitle;
 
-    @BindView(R.id.qrdecoderView)
+    private QrCodeScanResult qrCodeScanResult;
+    TextView textViewTitle;
     ZXingScannerView qrdecoderView;
 
-    @BindView(R.id.constraintLayout)
-    ConstraintLayout constraintLayout;
+    RelativeLayout constraintLayout;
 
-    @BindView(R.id.imageViewPreview)
-    ImageView imageViewPreview;
+//    ImageView imageViewPreview;
     private Bitmap bitmap;
 
 
@@ -69,10 +42,12 @@ public class QRCodeDialog extends Dialog implements ZXingScannerView.ResultHandl
 
 
     private void init(@NonNull Context context) {
-        View view = LayoutInflater.from(context).inflate(R.layout.qrcode_dialog, null, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.qrcode_layout, null, false);
         setContentView(view);
-        ButterKnife.bind(this);
-
+        textViewText = (TextView) view.findViewById(R.id.textViewText);
+        buttonOK= (Button) view.findViewById(R.id.buttonOK);
+        buttonRescan= (Button) view.findViewById(R.id.buttonRescan);
+        constraintLayout= (RelativeLayout) view.findViewById(R.id.constraintLayout);
 
     }
 
@@ -117,12 +92,10 @@ public class QRCodeDialog extends Dialog implements ZXingScannerView.ResultHandl
     }
 
 
-    @OnClick(R.id.buttonOK)
     public void onButtonOKClicked() {
-        qrCodeScanResult.onQRCodeResult(textViewText.getText().toString(),bitmap);
+        qrCodeScanResult.onQRCodeResult(textViewText.getText().toString(), bitmap);
     }
 
-    @OnClick(R.id.buttonRescan)
     public void onButtonRescanClicked() {
 
         constraintLayout.setVisibility(View.GONE);
@@ -131,7 +104,7 @@ public class QRCodeDialog extends Dialog implements ZXingScannerView.ResultHandl
     }
 
     @Override
-    public void handleResult(Result result, Bitmap bitmap) {
+    public void handleResult(Result result,Bitmap bitmap) {
 
 
         if (qrdecoderView != null) {

@@ -1,6 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="400dp"
+    android:layout_height="400dp">
 
-</LinearLayout>
+    <me.dm7.barcodescanner.zxing.ZXingScannerView
+        android:id="@+id/qrdecoderView"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:layout_centerInParent="true">
+
+    </me.dm7.barcodescanner.zxing.ZXingScannerView>
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:layout_centerInParent="true"
+        android:background="#ae000000"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center_horizontal"
+
+            android:text="Title"
+            android:textSize="18sp" />
+
+        <RelativeLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+
+
+            <TextView
+                android:id="@+id/textViewText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:background="@drawable/textview_white_rounded_border"
+                android:text="Text"
+                android:textSize="30sp"
+                 />
+
+            <Button
+                android:id="@+id/buttonOK"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+
+                android:layout_marginEnd="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="13dp"
+                android:text="ok"
+                android:textAllCaps="false"
+                 />
+
+            <Button
+                android:id="@+id/buttonRescan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="11dp"
+                android:layout_marginLeft="11dp"
+                android:layout_marginBottom="12dp"
+                android:text="Rescan"
+                android:textAllCaps="false"
+                />
+
+            <ImageView
+                android:id="@+id/imageViewPreview"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                 />
+
+
+        </RelativeLayout>
+
+    </FrameLayout>
+</RelativeLayout>

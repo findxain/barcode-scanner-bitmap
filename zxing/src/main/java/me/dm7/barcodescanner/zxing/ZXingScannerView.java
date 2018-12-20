@@ -2,7 +2,12 @@ package me.dm7.barcodescanner.zxing;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.ImageFormat;
+import android.graphics.Matrix;
 import android.graphics.Rect;
+import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.os.Handler;
 import android.os.Looper;
@@ -20,6 +25,7 @@ import com.google.zxing.ReaderException;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumMap;
@@ -33,13 +39,14 @@ public class ZXingScannerView extends BarcodeScannerView {
     private static final String TAG = "ZXingScannerView";
 
     public interface ResultHandler {
-        void handleResult(Result rawResult);
+        void handleResult(Result rawResult, Bitmap bitmap);
     }
 
     private MultiFormatReader mMultiFormatReader;
     public static final List<BarcodeFormat> ALL_FORMATS = new ArrayList<>();
     private List<BarcodeFormat> mFormats;
     private ResultHandler mResultHandler;
+
 
     static {
         ALL_FORMATS.add(BarcodeFormat.AZTEC);
@@ -81,30 +88,57 @@ public class ZXingScannerView extends BarcodeScannerView {
     }
 
     public Collection<BarcodeFormat> getFormats() {
-        if(mFormats == null) {
+        if (mFormats == null) {
             return ALL_FORMATS;
         }
         return mFormats;
     }
 
     private void initMultiFormatReader() {
-        Map<DecodeHintType,Object> hints = new EnumMap<>(DecodeHintType.class);
+        Map<DecodeHintType, Object> hints = new EnumMap<>(DecodeHintType.class);
         hints.put(DecodeHintType.POSSIBLE_FORMATS, getFormats());
         mMultiFormatReader = new MultiFormatReader();
         mMultiFormatReader.setHints(hints);
     }
 
     @Override
-    public void onPreviewFrame(byte[] data, Camera camera) {
-        if(mResultHandler == null) {
+    public void onPreviewFrame(byte[] data, final Camera camera) {
+        if (mResultHandler == null) {
             return;
         }
-        
+        Camera.Parameters parameters = camera.getParameters();
+        Camera.Size size = parameters.getPreviewSize();
+        int width = size.width;
+        int height = size.height;
+        final byte[] finalData = data.clone();
+
+        ByteArrayOutputStream outstr = new ByteArrayOutputStream();
+        Rect rect = new Rect(0, 0, width, height);
+        int pictureFormat = camera.getParameters().getPreviewFormat();
+        Log.d("qrcode", "handleResult: " + pictureFormat);
+        YuvImage yuvimage = new YuvImage(finalData, ImageFormat.NV21, width, height, null);
+        yuvimage.compressToJpeg(rect, 100, outstr);
+        Bitmap bit = BitmapFactory.decodeByteArray(outstr.toByteArray(), 0, outstr.size());
+
+        Matrix matrix = new Matrix();
+        switch (getRotationCount()) {
+            case 0:
+                break;
+            case 1:
+                matrix.postRotate(90);
+                break;
+            case 2:
+                matrix.postRotate(180);
+                break;
+            case 3:
+                matrix.postRotate(-90);
+                break;
+        }
+
+        final Bitmap bitmap2 = Bitmap.createBitmap(bit, 0, 0, width, height, matrix, false);
+
         try {
-            Camera.Parameters parameters = camera.getParameters();
-            Camera.Size size = parameters.getPreviewSize();
-            int width = size.width;
-            int height = size.height;
+
 
             if (DisplayUtils.getScreenOrientation(getContext()) == Configuration.ORIENTATION_PORTRAIT) {
                 int rotationCount = getRotationCount();
@@ -149,6 +183,8 @@ public class ZXingScannerView extends BarcodeScannerView {
             final Result finalRawResult = rawResult;
 
             if (finalRawResult != null) {
+
+
                 Handler handler = new Handler(Looper.getMainLooper());
                 handler.post(new Runnable() {
                     @Override
@@ -159,16 +195,18 @@ public class ZXingScannerView extends BarcodeScannerView {
                         ResultHandler tmpResultHandler = mResultHandler;
                         mResultHandler = null;
 
+
                         stopCameraPreview();
                         if (tmpResultHandler != null) {
-                            tmpResultHandler.handleResult(finalRawResult);
+                            tmpResultHandler.handleResult(finalRawResult, bitmap2);
+
                         }
                     }
                 });
             } else {
                 camera.setOneShotPreviewCallback(this);
             }
-        } catch(RuntimeException e) {
+        } catch (RuntimeException e) {
             // TODO: Terrible hack. It is possible that this method is invoked after camera is released.
             Log.e(TAG, e.toString(), e);
         }
@@ -190,7 +228,7 @@ public class ZXingScannerView extends BarcodeScannerView {
         try {
             source = new PlanarYUVLuminanceSource(data, width, height, rect.left, rect.top,
                     rect.width(), rect.height(), false);
-        } catch(Exception e) {
+        } catch (Exception e) {
         }
 
         return source;
