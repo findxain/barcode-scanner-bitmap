@@ -1,6 +1,6 @@
 Cradit goes to  https://github.com/dm77/barcodescanner 
 
-Zbar removed and while scannign qrcode it give yo callback with an image Bitmap of scanned qrcode
+zbar removed and while scanning qrcode it give yo callback with an image Bitmap of scanned qrcode
 
 Introduction
 ============
