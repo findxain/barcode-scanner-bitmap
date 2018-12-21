@@ -14,13 +14,14 @@ buildscript {
 
 allprojects {
     group = 'me.dm7.barcodescanner'
-    version = '2.0.2'
+    version = '2.0.3'
 
     repositories {
         mavenCentral()
         maven {
             url 'https://oss.sonatype.org/content/groups/public'
         }
+        maven { url "https://jitpack.io" }
     }
 
     ext {
@@ -63,53 +64,53 @@ subprojects {
                     sign configurations.archives
                 }
 
-                uploadArchives {
-                    repositories.mavenDeployer {
-                        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-                        repository(url: sonatypeRepo) {
-                            authentication(userName: sonatypeUsername , password: sonatypePassword)
-                            releases(updatePolicy: 'always')
-                        }
-
-                        snapshotRepository(url: sonatypeSnapshotRepo) {
-                            authentication(userName: sonatypeUsername , password: sonatypePassword)
-                            snapshots(updatePolicy: 'always')
-                        }
-
-                        pom.project {
-                            name project.pomName
-                            version project.version
-                            groupId project.group
-                            packaging project.pomPackaging
-                            artifactId project.pomArtifactId
-                            description project.pomDescription
-                            url 'https://github.com/dm77/barcodescanner'
-
-                            scm {
-                                url 'scm:git@github.com:dm77/barcodescanner.git'
-                                connection 'scm:git@github.com:dm77/barcodescanner.git'
-                                developerConnection 'scm:git@github.com:dm77/barcodescanner.git'
-                            }
-
-                            licenses {
-                                license {
-                                    name 'The Apache Software License, Version 2.0'
-                                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                                    distribution 'repo'
-                                }
-                            }
-
-                            developers {
-                                developer {
-                                    id 'dm77'
-                                    name 'Dushyanth Maguluru'
-                                    email 'dushyanth.maguluru@gmail.com'
-                                }
-                            }
-                        }
-                    }
-                }
+//                uploadArchives {
+//                    repositories.mavenDeployer {
+//                        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+//
+//                        repository(url: sonatypeRepo) {
+//                            authentication(userName: sonatypeUsername , password: sonatypePassword)
+//                            releases(updatePolicy: 'always')
+//                        }
+//
+//                        snapshotRepository(url: sonatypeSnapshotRepo) {
+//                            authentication(userName: sonatypeUsername , password: sonatypePassword)
+//                            snapshots(updatePolicy: 'always')
+//                        }
+//
+//                        pom.project {
+//                            name project.pomName
+//                            version project.version
+//                            groupId project.group
+//                            packaging project.pomPackaging
+//                            artifactId project.pomArtifactId
+//                            description project.pomDescription
+//                            url 'https://github.com/dm77/barcodescanner'
+//
+//                            scm {
+//                                url 'scm:git@github.com:dm77/barcodescanner.git'
+//                                connection 'scm:git@github.com:dm77/barcodescanner.git'
+//                                developerConnection 'scm:git@github.com:dm77/barcodescanner.git'
+//                            }
+//
+//                            licenses {
+//                                license {
+//                                    name 'The Apache Software License, Version 2.0'
+//                                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+//                                    distribution 'repo'
+//                                }
+//                            }
+//
+//                            developers {
+//                                developer {
+//                                    id 'dm77'
+//                                    name 'Dushyanth Maguluru'
+//                                    email 'dushyanth.maguluru@gmail.com'
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
             }
         }
     }
