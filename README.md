@@ -14,7 +14,7 @@ Installation
 
 Add the following dependency to your build.gradle file.
 
-`'implementation 'com.github.findxain.barcode-scanner-bitmap:zxing:2.3.4'`
+`implementation 'com.github.findxain.barcode-scanner-bitmap:zxing:2.3.4'`
 
 Simple Usage
 ------------
@@ -28,7 +28,7 @@ Simple Usage
 2.) A very basic activity would look like this:
 
 ```java
-public class SimpleScannerActivity extends Activity implements ZXingScannerView.ResultHandler {
+public class SimpleScannerActivity extends Activity implements QRCodeDialog.QrCodeScanResult {
     QRCodeDialog qrCodeDialog;
 
 
