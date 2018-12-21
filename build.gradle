@@ -28,7 +28,6 @@ allprojects {
         isLibrary = false
     }
 }
-
 subprojects {
     afterEvaluate { Project project ->
         ext.pluginContainer = project.getPlugins()
