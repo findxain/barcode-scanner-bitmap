@@ -14,8 +14,9 @@ Installation
 
 Add the following dependency to your build.gradle file.
 
-`implementation 'com.github.findxain.barcode-scanner-bitmap:zxing:[![](https://jitpack.io/v/findxain/barcode-scanner-bitmap.svg)](https://jitpack.io/#findxain/barcode-scanner-bitmap)
-'`
+`implementation 'com.github.findxain.barcode-scanner-bitmap:zxing:latest_version'`
+
+[![](https://jitpack.io/v/findxain/barcode-scanner-bitmap.svg)](https://jitpack.io/#findxain/barcode-scanner-bitmap)
 
 Simple Usage
 ------------
