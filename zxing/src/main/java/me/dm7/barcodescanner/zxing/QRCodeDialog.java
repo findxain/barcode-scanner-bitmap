@@ -48,6 +48,19 @@ public class QRCodeDialog extends Dialog implements ZXingScannerView.ResultHandl
         constraintLayout = (RelativeLayout) view.findViewById(R.id.constraintLayout);
         qrdecoderView = (ZXingScannerView) view.findViewById(R.id.qrdecoderView);
 
+        buttonOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onButtonOKClicked();
+            }
+        });
+
+        buttonRescan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onButtonRescanClicked();
+            }
+        });
     }
 
     @SuppressLint("MissingPermission")
