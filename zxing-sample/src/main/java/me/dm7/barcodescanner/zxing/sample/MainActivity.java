@@ -3,6 +3,7 @@ package me.dm7.barcodescanner.zxing.sample;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -11,9 +12,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.zxing.qrcode.encoder.QRCode;
+
+import me.dm7.barcodescanner.zxing.QRCodeDialog;
+
 public class MainActivity extends AppCompatActivity {
     private static final int ZXING_CAMERA_PERMISSION = 1;
     private Class<?> mClss;
+    private QRCodeDialog qrCodeDialog;
 
     @Override
     public void onCreate(Bundle state) {
@@ -68,11 +74,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,  String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case ZXING_CAMERA_PERMISSION:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if(mClss != null) {
+                    if (mClss != null) {
                         Intent intent = new Intent(this, mClss);
                         startActivity(intent);
                     }
@@ -81,5 +87,18 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return;
         }
+    }
+
+    public void launchDialog(View view) {
+
+        qrCodeDialog = new QRCodeDialog(this).setTextViewTitle("Scan QRCode of asset");
+        qrCodeDialog.setResultListner(new QRCodeDialog.QrCodeScanResult() {
+            @Override
+            public void onQRCodeResult(String text, Bitmap bitmap) {
+
+            }
+        });
+        qrCodeDialog.show();
+
     }
 }

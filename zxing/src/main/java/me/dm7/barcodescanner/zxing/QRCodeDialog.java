@@ -22,14 +22,11 @@ public class QRCodeDialog extends Dialog implements ZXingScannerView.ResultHandl
     TextView textViewText;
     Button buttonOK;
     Button buttonRescan;
-
     private QrCodeScanResult qrCodeScanResult;
     TextView textViewTitle;
     ZXingScannerView qrdecoderView;
 
     RelativeLayout constraintLayout;
-
-//    ImageView imageViewPreview;
     private Bitmap bitmap;
 
 
@@ -45,9 +42,11 @@ public class QRCodeDialog extends Dialog implements ZXingScannerView.ResultHandl
         View view = LayoutInflater.from(context).inflate(R.layout.qrcode_layout, null, false);
         setContentView(view);
         textViewText = (TextView) view.findViewById(R.id.textViewText);
-        buttonOK= (Button) view.findViewById(R.id.buttonOK);
-        buttonRescan= (Button) view.findViewById(R.id.buttonRescan);
-        constraintLayout= (RelativeLayout) view.findViewById(R.id.constraintLayout);
+        textViewTitle = (TextView) view.findViewById(R.id.textViewTitle);
+        buttonOK = (Button) view.findViewById(R.id.buttonOK);
+        buttonRescan = (Button) view.findViewById(R.id.buttonRescan);
+        constraintLayout = (RelativeLayout) view.findViewById(R.id.constraintLayout);
+        qrdecoderView = (ZXingScannerView) view.findViewById(R.id.qrdecoderView);
 
     }
 
@@ -94,17 +93,20 @@ public class QRCodeDialog extends Dialog implements ZXingScannerView.ResultHandl
 
     public void onButtonOKClicked() {
         qrCodeScanResult.onQRCodeResult(textViewText.getText().toString(), bitmap);
+        dismiss();
     }
 
     public void onButtonRescanClicked() {
 
         constraintLayout.setVisibility(View.GONE);
         qrdecoderView.resumeCameraPreview(this);
+        buttonOK.setEnabled(false);
 
     }
 
     @Override
-    public void handleResult(Result result,Bitmap bitmap) {
+    public void handleResult(Result result, Bitmap bitmap) {
+        buttonOK.setEnabled(true);
 
 
         if (qrdecoderView != null) {

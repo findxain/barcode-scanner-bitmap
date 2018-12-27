@@ -1,6 +1,7 @@
 package me.dm7.barcodescanner.zxing.sample;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -51,7 +52,7 @@ public class CustomViewFinderScannerActivity extends BaseScannerActivity impleme
     }
 
     @Override
-    public void handleResult(Result rawResult) {
+    public void handleResult(Result rawResult, Bitmap bitmap) {
         Toast.makeText(this, "Contents = " + rawResult.getText() +
                 ", Format = " + rawResult.getBarcodeFormat().toString(), Toast.LENGTH_SHORT).show();
 

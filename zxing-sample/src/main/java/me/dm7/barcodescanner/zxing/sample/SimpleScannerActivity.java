@@ -1,5 +1,6 @@
 package me.dm7.barcodescanner.zxing.sample;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.ViewGroup;
@@ -37,7 +38,7 @@ public class SimpleScannerActivity extends BaseScannerActivity implements ZXingS
     }
 
     @Override
-    public void handleResult(Result rawResult) {
+    public void handleResult(Result rawResult, Bitmap bitmap) {
         Toast.makeText(this, "Contents = " + rawResult.getText() +
                 ", Format = " + rawResult.getBarcodeFormat().toString(), Toast.LENGTH_SHORT).show();
 

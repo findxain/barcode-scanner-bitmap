@@ -1,5 +1,6 @@
 package me.dm7.barcodescanner.zxing.sample;
 
+import android.graphics.Bitmap;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -139,7 +140,7 @@ public class FullScannerActivity extends BaseScannerActivity implements MessageD
     }
 
     @Override
-    public void handleResult(Result rawResult) {
+    public void handleResult(Result rawResult, Bitmap bitmap) {
         try {
             Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);

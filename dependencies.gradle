@@ -4,7 +4,7 @@ ext.versions = [
         target_sdk    : 25,
         build_tools   : "25.0.2",
         support_lib   : "25.3.1",
-        zxing         : "3.3.0",
+        zxing         : "3.3.1",
         barcodescanner: "1.9.8"
 ]
 

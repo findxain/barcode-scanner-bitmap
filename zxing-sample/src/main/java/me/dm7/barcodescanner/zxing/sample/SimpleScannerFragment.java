@@ -1,5 +1,6 @@
 package me.dm7.barcodescanner.zxing.sample;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -29,7 +30,7 @@ public class SimpleScannerFragment extends Fragment implements ZXingScannerView.
     }
 
     @Override
-    public void handleResult(Result rawResult) {
+    public void handleResult(Result rawResult, Bitmap bitmap) {
         Toast.makeText(getActivity(), "Contents = " + rawResult.getText() +
                 ", Format = " + rawResult.getBarcodeFormat().toString(), Toast.LENGTH_SHORT).show();
         // Note:

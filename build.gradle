@@ -14,7 +14,7 @@ buildscript {
 
 allprojects {
     group = 'me.dm7.barcodescanner'
-    version = '2.0.4'
+    version = '2.0.5'
 
     repositories {
         mavenCentral()
@@ -31,7 +31,7 @@ allprojects {
 subprojects {
     afterEvaluate { Project project ->
         ext.pluginContainer = project.getPlugins()
-        if(ext.pluginContainer.hasPlugin("com.android.application") || ext.pluginContainer.hasPlugin("com.android.library")) {
+        if (ext.pluginContainer.hasPlugin("com.android.application") || ext.pluginContainer.hasPlugin("com.android.library")) {
             android {
                 compileSdkVersion versions.compile_sdk
                 buildToolsVersion versions.build_tools
@@ -50,13 +50,13 @@ subprojects {
                 }
             }
         }
-        if(project.isLibrary && rootProject.hasProperty('sonatypeUsername') && rootProject.hasProperty('sonatypePassword')) {
+        if (project.isLibrary && rootProject.hasProperty('sonatypeUsername') && rootProject.hasProperty('sonatypePassword')) {
             configure(project) {
                 apply plugin: 'maven'
                 apply plugin: 'signing'
 
                 apply plugin: 'com.github.dcendents.android-maven'
-                group='com.github.findxain'
+                group = 'com.github.findxain'
 
                 signing {
                     required { gradle.taskGraph.hasTask("uploadArchives") }
