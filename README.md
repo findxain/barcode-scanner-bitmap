@@ -13,12 +13,12 @@ Installation
 ------------
 Add the following dependency to your build.gradle Project file.
 
-allprojects {
+`allprojects {
 		repositories {
 			...
 			maven { url 'https://jitpack.io' }
 		}
-	}
+	}`
 
 Add the following dependency to your build.gradle app module file.
 
