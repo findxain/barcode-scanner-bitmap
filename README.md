@@ -11,8 +11,16 @@ Android library projects that provides easy to use and extensible Barcode Scanne
 
 Installation
 ------------
+Add the following dependency to your build.gradle Project file.
 
-Add the following dependency to your build.gradle file.
+allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+
+Add the following dependency to your build.gradle app module file.
 
 `implementation 'com.github.findxain.barcode-scanner-bitmap:zxing:latest_version'`
 
